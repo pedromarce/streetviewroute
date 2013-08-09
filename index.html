@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <title>GPX route street viewer</title>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="js/main.js"></script>
+  </head>
+
+  <body >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-offset-3 panel">
+          <h1 class="margin-base-vertical">GPX Street View</h1>
+          <p>Select a GPX file and it will show the route using Google Street View images.</p>
+          <div class="form-group">
+            <span>
+                <input  type="file" 
+                        style="visibility:hidden; width: 1px;" 
+                        id='${multipartFilePath}' name='${multipartFilePath}'  
+                        onchange="$(this).parent().find('span').html($(this).val().replace('C:\\fakepath\\', '')); initialize(this);"  /> <!-- Chrome security returns 'C:\fakepath\'  -->
+                <input class="btn btn-primary" type="button" value="Upload File.." onclick="$(this).parent().find('input[type=file]').click();"/> <!-- on button click fire the file click event -->
+                &nbsp;
+                <span  class="badge badge-important" ></span>
+            </span>
+          </div>
+        </div>
+      </div>
+  <!-- Modal -->
+  <div class="modal" id="GPXViewer">
+    <div class="modal-dialog modal-wide">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="container">
+              <div class="row">
+                <div class="col-lg-6 col-offset-3">
+                  <div class="form-group">
+                    <label for="speed" class="contro-label">Speed</label>
+                    <input type='text' id="speed" value="10" onchange="valuechanged(this);" />
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default" onclick="start();">Start</button>
+                      <button type="button" class="btn btn-default" onclick="stop();">Stop</button>
+                      <button type="button" class="btn btn-default" onclick="restart();">Restart</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>          
+        </div>
+        <div class="modal-body">
+          <div class="container">
+              <div class="row">
+                <div class="panel map" id="pano"></div>
+              </div>
+              <div class="row">
+                <div class="panel map" id="map-canvas"></div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="stop();">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  </body>
+</html>
